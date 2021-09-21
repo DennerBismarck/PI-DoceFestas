@@ -173,10 +173,10 @@
     <div class="menu">
     	<ul>
     		<center>
-    		<li><a href="C:/xampp/htdocs/PI/CadastroDoCliente.html">Cadastro do cliente</a></li>
-    		<li><a href="C:/xampp/htdocs/PI/CadastroDoAluguel.html">Cadastro do aluguel</a></li>
-    		<li><a href="C:/xampp/htdocs/PI/TabelaDosClientes.html">Tabela dos clientes</a></li>
-    		<li><a href="C:/xampp/htdocs/PI/TabelaDosAlugueis.html">Tabela dos alugueis</a></li>
+    		<li><a href="CadastroDoCliente.php">Cadastro do cliente</a></li>
+    		<li><a href="CadastroDoAluguel.php">Cadastro do aluguel</a></li>
+    		<li><a href="TabelaDosClientes.php">Tabela dos clientes</a></li>
+    		<li><a href="TabelaDosAlugueis.php">Tabela dos alugueis</a></li>
     	</center>
     	</ul>
     	
