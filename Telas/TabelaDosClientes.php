@@ -2,6 +2,10 @@
     <head>
         <meta charset="utf-8">
         <title>Doce festas - Clientes</title>
+        <?php include("config_doce.php"); 
+        $consulta = $conexao->query("select * from tb_clientes 
+        join tb_bairros on cli_bai_codigo = bai_codigo;");
+        ?>
          <script src="https://kit.fontawesome.com/a4a3c0465f.js" crossorigin="anonymous"></script>
         <style>
              *{
@@ -71,49 +75,24 @@
                     <th>Bairro</th>
                     <th>Logradouro</th>
                     <th>Número</th>
-                    <th>Telefone</th>
-                    <th>Ações</th>
+                                      
                 </tr>
+                <?php while ($resultado = $consulta->fetch_assoc()){ ?>
                 <tr>
-                    <td>aaaaaaaaaaaaaaaaaaaaaaa</td> 
-                    <td>bbbbbbbb</td>
-                    <td>jhjhjh</td> 
-                    <td>bvbvhhhhh</td> 
-                    <td>ccccccccc</td> 
-                    <td>xxxxxxxxxx</td> 
+                    <td><?php echo $resultado["cli_codigo"]?></td> 
+                    <td><?php echo $resultado["cli_nome"]?></td>
+                    <td><?php echo $resultado["bai_bairro"]?></td> 
+                    <td><?php echo $resultado["cli_logradouro"]?></td> 
+                    <td><?php echo $resultado["cli_numero"]?></td> 
+                    
                     <td><a href="https://cdn.discordapp.com/attachments/715244206154580016/882320071739994162/1630431891912.jpg"><i class="fas fa-edit" aria-hidden = "true"></i></a>
                     || <a href="https://cdn.discordapp.com/attachments/715244206154580016/817353242442858557/1ff408ad-4df9-4183-a311-ac043b35d6dc.png" onclick="return confirm('Deseja apagar?')"><i class="fas fa-trash"></i></a></td>
+                    
                 </tr>
-                <tr>
-                    <td>aaaaaaaaaaaaaaaaaaaaaaa</td> 
-                    <td>bbbbbbbb</td>
-                    <td>jhjhjh</td> 
-                    <td>bvbvhhhhh</td> 
-                    <td>ccccccccc</td> 
-                    <td>xxxxxxxxxx</td> 
-                    <td><a href="https://cdn.discordapp.com/attachments/715244206154580016/882320071739994162/1630431891912.jpg"><i class="fas fa-edit" aria-hidden = "true"></i></a>
-                    || <a href="https://cdn.discordapp.com/attachments/715244206154580016/817353242442858557/1ff408ad-4df9-4183-a311-ac043b35d6dc.png" onclick="return confirm('Deseja apagar?')"><i class="fas fa-trash"></i></a></td>
-                </tr>
-                <tr>
-                    <td>aaaaaaaaaaaaaaaaaaaaaaa</td> 
-                    <td>bbbbbbbb</td>
-                    <td>jhjhjh</td> 
-                    <td>bvbvhhhhh</td> 
-                    <td>ccccccccc</td> 
-                    <td>xxxxxxxxxx</td> 
-                    <td><a href="https://cdn.discordapp.com/attachments/715244206154580016/882320071739994162/1630431891912.jpg"><i class="fas fa-edit" aria-hidden = "true"></i></a>
-                    || <a href="https://cdn.discordapp.com/attachments/715244206154580016/817353242442858557/1ff408ad-4df9-4183-a311-ac043b35d6dc.png" onclick="return confirm('Deseja apagar?')"><i class="fas fa-trash"></i></a></td>
-                </tr>
-                <tr>
-                    <td>aaaaaaaaaaaaaaaaaaaaaaa</td> 
-                    <td>bbbbbbbb</td>
-                    <td>jhjhjh</td> 
-                    <td>bvbvhhhhh</td> 
-                    <td>ccccccccc</td> 
-                    <td>xxxxxxxxxx</td> 
-                    <td><a href="https://cdn.discordapp.com/attachments/715244206154580016/882320071739994162/1630431891912.jpg"><i class="fas fa-edit" aria-hidden = "true"></i></a>
-                    || <a href="https://cdn.discordapp.com/attachments/715244206154580016/817353242442858557/1ff408ad-4df9-4183-a311-ac043b35d6dc.png" onclick="return confirm('Deseja apagar?')"><i class="fas fa-trash"></i></a></td>
-                </tr>
+                <?php } ?>
+                
+                
+                
             </table>
         </div>
     </body>

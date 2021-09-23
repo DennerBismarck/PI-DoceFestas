@@ -68,6 +68,21 @@
 </style>
 	
 </head>
+<?php
+include("config_doce.php");
+if(isset($_POST['Nome'])){
+    extract($_POST);
+    if($consulta = $conexao->query("insert into tb_clientes 
+    (cli_nome, cli_bai_codigo, cli_logradouro, cli_numero)
+    values ('$Nome', $Bairro, '$Logradouro', $Numero);"))
+        {
+            header("Location: TabelaDosClientes.php");
+        } else {
+            echo "REGISTRATION ERROR";
+        }
+
+}
+?>
 
 <body>
     
@@ -75,22 +90,25 @@
             <h1 style= "text-align: center">Cadastro dos clientes</h1>
     </div>
 
+   
 
-<form class="formulario" method="POST" action="">
+
+<form class="formulario" method="POST" action="?">
      <br>
 
     <center>
-    <input required class ="form" size="45" type="text" name="nome" placeholder="Nome completo:"> <br>
-    <input required class ="form" type="text" name="telefone" placeholder="Telefone:"> <br>
-    <input required class ="form" type="text" name="bairro" placeholder="Bairro:"> <br>
-    <input required class ="form" type="text" name="rua" placeholder="Rua:"> <br>
-    <input required class ="form" type="text" name="numero" placeholder="Numero:"> <br>
+    <input required class ="form" size="45" type="text" name="Nome" placeholder="Nome completo:"> <br>
+    
+    <input required class ="form" type="number" name="Bairro" placeholder="Bairro:"> <br>
+    <input required class ="form" type="text" name="Logradouro" placeholder="Logradouro:"> <br>
+    <input required class ="form" type="number" name="Numero" placeholder="Numero:"> <br>
     <br>
     <input id="enviar" type="submit" value="ENVIAR">
-
+   
     </center>
-
+ 
 </form>
+
 
 </body>
 
