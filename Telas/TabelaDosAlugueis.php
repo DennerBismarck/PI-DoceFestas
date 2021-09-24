@@ -3,6 +3,17 @@
         <meta charset="utf-8">
         <title>Doce festas - Locações</title>
          <script src="https://kit.fontawesome.com/a4a3c0465f.js" crossorigin="anonymous"></script>
+         <?php 
+            include("config_doce.php");
+            $consulta = $conexao->query("select * from tb_alugueis 
+            join tb_clientes on alu_cli_codigo = cli_codigo
+            join tb_temas on alu_tem_codigo = tem_codigo
+            group by alu_codigo;");
+            $consulta2 = $conexao->query("select * from tb_itensdosalugueis
+            join tb_alugueis on ilu_alu_codigo = alu_codigo
+            join tb_itens on ilu_ite_codigo = ite_codigo
+            group by ilu_alu_codigo;")
+         ?>
         <style>
              *{
                 margin:0;
@@ -66,77 +77,36 @@
         <div id="quadrotabela">
             <table>
                 <tr>
-                    <th>Código da locação</th> 
-                    <th>Nome</th> 
+                    <th>Código da locação</th>
+                    <th>Cliente</th>
                     <th>Tema</th>
-                    <th>Cor</th>
-                    <th>Nome do aniversariante</th>
+                    <th>Aniversariante</th>
+                    <th>Acessórios</th>
                     <th>Data da festa</th>
                     <th>Data da entrega</th>
                     <th>Data do recebimento</th>
+                   <!-- <th>Itens</th>-->
                     <th>Valor do kit</th>
                     <th>Ações</th>
                 </tr>
+                <?php while ($resultado = $consulta->fetch_assoc()){ ?>
                 <tr>
-                    <td>aaaaaaaaaaaaaaaaaaaaaaa</td> 
-                    <td>bbbbbbbb</td>
-                    <td>jhjhjh</td> 
-                    <td>bvbvhhhhh</td> 
-                    <td>ccccccccc</td> 
-                    <td>05/02/2004</td> 
-                    <td>11/09/2001</td>
-                    <td>98/32/6585874</td>
-                    <td>R$900,00</td>
-                    <td><a href="https://cdn.discordapp.com/attachments/715244206154580016/882320071739994162/1630431891912.jpg"><i class="fas fa-edit" aria-hidden = "true"></i></a>|<a href="https://cdn.discordapp.com/attachments/715244206154580016/817353242442858557/1ff408ad-4df9-4183-a311-ac043b35d6dc.png" onclick="return confirm('Deseja apagar?')"><i class="fas fa-trash"></i></a></td>
+                    <td><?php echo $resultado["alu_codigo"]?></td> 
+                    <td><?php echo $resultado["cli_nome"]?></td>
+                    <td><?php echo $resultado["tem_temas"]?></td>
+                    <td><?php echo $resultado["alu_aniversariante"]?></td> 
+                    <td><?php echo $resultado["alu_acessorios"]?></td>
+                    <td><?php echo $resultado["alu_data_festa"]?></td> 
+                    <td><?php echo $resultado["alu_entrega"]?></td> 
+                    <td><?php echo $resultado["alu_recebimento"]?></td> 
+                    <!--<td><//?php while ($resultado2 = $consulta2->fetch_assoc()){?>  
+                        <//?php echo $resultado2['ite_item']?>
+                    <//?php } ?></td> -->   
+                    <td >R$ <?php echo number_format($resultado['alu_valor'],2,",",".");?>
+                    <td><a href="aluguelEditar.php?codigo=<?php echo $resultado['alu_codigo']; ?>"><i class="fas fa-edit" aria-hidden = "true"></i></a>
+                    || <a href="https://cdn.discordapp.com/attachments/715244206154580016/817353242442858557/1ff408ad-4df9-4183-a311-ac043b35d6dc.png" onclick="return confirm('Deseja apagar?')"><i class="fas fa-trash"></i></a></td>    
                 </tr>
-                <tr>
-                    <td>aaaaaaaaaaaaaaaaaaaaaaa</td> 
-                    <td>bbbbbbbb</td>
-                    <td>jhjhjh</td> 
-                    <td>bvbvhhhhh</td> 
-                    <td>ccccccccc</td> 
-                    <td>05/02/2004</td> 
-                    <td>11/09/2001</td>
-                    <td>98/32/6585874</td>
-                    <td>R$900,00</td>
-                    <td><a href="https://cdn.discordapp.com/attachments/715244206154580016/882320071739994162/1630431891912.jpg"><i class="fas fa-edit" aria-hidden = "true"></i></a>|<a href="https://cdn.discordapp.com/attachments/715244206154580016/817353242442858557/1ff408ad-4df9-4183-a311-ac043b35d6dc.png" onclick="return confirm('Deseja apagar?')"><i class="fas fa-trash"></i></a></td>
-                </tr>
-                <tr>
-                    <td>aaaaaaaaaaaaaaaaaaaaaaa</td> 
-                    <td>bbbbbbbb</td>
-                    <td>jhjhjh</td> 
-                    <td>bvbvhhhhh</td> 
-                    <td>ccccccccc</td> 
-                    <td>05/02/2004</td> 
-                    <td>11/09/2001</td>
-                    <td>98/32/6585874</td>
-                    <td>R$900,00</td>
-                    <td><a href="https://cdn.discordapp.com/attachments/715244206154580016/882320071739994162/1630431891912.jpg"><i class="fas fa-edit" aria-hidden = "true"></i></a>|<a href="https://cdn.discordapp.com/attachments/715244206154580016/817353242442858557/1ff408ad-4df9-4183-a311-ac043b35d6dc.png" onclick="return confirm('Deseja apagar?')"><i class="fas fa-trash"></i></a></td>
-                </tr>
-                <tr>
-                    <td>aaaaaaaaaaaaaaaaaaaaaaa</td> 
-                    <td>bbbbbbbb</td>
-                    <td>jhjhjh</td> 
-                    <td>bvbvhhhhh</td> 
-                    <td>ccccccccc</td> 
-                    <td>05/02/2004</td> 
-                    <td>11/09/2001</td>
-                    <td>98/32/6585874</td>
-                    <td>R$900,00</td>
-                    <td><a href="https://cdn.discordapp.com/attachments/715244206154580016/882320071739994162/1630431891912.jpg"><i class="fas fa-edit" aria-hidden = "true"></i></a>|<a href="https://cdn.discordapp.com/attachments/715244206154580016/817353242442858557/1ff408ad-4df9-4183-a311-ac043b35d6dc.png" onclick="return confirm('Deseja apagar?')"><i class="fas fa-trash"></i></a></td>
-                </tr>
-                <tr>
-                    <td>aaaaaaaaaaaaaaaaaaaaaaa</td> 
-                    <td>bbbbbbbb</td>
-                    <td>jhjhjh</td> 
-                    <td>bvbvhhhhh</td> 
-                    <td>ccccccccc</td> 
-                    <td>05/02/2004</td> 
-                    <td>11/09/2001</td>
-                    <td>98/32/6585874</td>
-                    <td>R$900,00</td>
-                    <td><a href="https://cdn.discordapp.com/attachments/715244206154580016/882320071739994162/1630431891912.jpg"><i class="fas fa-edit" aria-hidden = "true"></i></a>|<a href="https://cdn.discordapp.com/attachments/715244206154580016/817353242442858557/1ff408ad-4df9-4183-a311-ac043b35d6dc.png" onclick="return confirm('Deseja apagar?')"><i class="fas fa-trash"></i></a></td>
-                </tr>
+                <?php } ?>
             </table>
         </div>
     </body>

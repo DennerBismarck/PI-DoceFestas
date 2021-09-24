@@ -39,7 +39,7 @@ create table tb_vendedores (
 
 create table tb_alugueis (
 alu_codigo int not null auto_increment,
-alu_valor varchar(70) not null,
+alu_valor decimal not null,
 alu_idade int not null,
 alu_entrega date not null,
 alu_recebimento date not null,
@@ -69,7 +69,7 @@ primary key(ilu_ite_codigo, ilu_alu_codigo)
 )engine=InnoDB;
 /* Inserts abaixo */
 insert into tb_itens (ite_item) values
-('Mesa G Estrela amarela '),
+('Mesa G Estrela amarela'),
 ('Mesa G Branca'),
 ('Mesa M Ferro dourada'),
 ('Mesa M Imperial marrom '),
@@ -114,3 +114,9 @@ insert into tb_bairros (bai_bairro) values
 ('Sede'),
 ('Vila do Rio'),
 ('Zona rural');
+
+insert into tb_vendedores (ven_codigo,ven_login, ven_senha) value
+('1','login','senha');
+
+insert into tb_itensdosalugueis (ilu_ite_codigo, ilu_alu_codigo) values
+(10, 1);

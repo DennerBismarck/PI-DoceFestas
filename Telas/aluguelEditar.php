@@ -1,8 +1,10 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Doce Festas - Cadastro</title>
+<title>Doce Festas - Editar Aluguel</title>
 <?php
+    
+    $codigo = $_GET['codigo'];
     include("config_doce.php");
     //Milhões de consultas pra esse ninho de rato rodar
     $consultaMesas = $conexao->query("select * from tb_itens where ite_item like '%Mesa%';");
@@ -20,13 +22,15 @@
 
     $vendedor = '1';
 
+    // consulta para pegar os dados do aluguel atual
+    $consultaAlu = $conexao->query("select * from tb_alugueis join tb_temas where alu_codigo = $codigo");
+    $resultadoAlu = $consultaAlu->fetch_assoc();
+
     //inserindo as coisas nas tabelas
     if(isset($_POST['acessorios'])){
         extract($_POST);
-        if($consulta = $conexao->query("insert into tb_alugueis (alu_valor, alu_idade, alu_entrega, alu_recebimento, alu_data_festa,
-        alu_acessorios, alu_aniversariante, alu_tem_codigo, alu_ven_codigo, alu_cli_codigo) 
-        values 
-        ('$valor','$idade','$data_e','$data_r','$data_f','$acessorios','$nome_ani','$tema','$vendedor', '$cliente');")) {
+        if($consulta = $conexao->query("update tb_alugueis set alu_cli_codigo='$cliente',alu_tem_codigo='$tema',alu_valor='$valor', alu_idade='$idade', alu_entrega='$data_e',
+        alu_recebimento='$data_r', alu_data_festa='$data_f', alu_acessorios='$acessorios', alu_aniversariante='$nome_ani' where alu_codigo=$codigo")) {
             header("Location: TabelaDosAlugueis.php");
         } else {
             echo"REGISTRATION ERROR1";
@@ -155,11 +159,11 @@
 <body>
    <!-- Div da parte de cima--> 
     <div id = header>
-            <h1 style= "text-align: center">Cadastro dos aluguéis</h1>
+            <h1 style= "text-align: center">Edição de aluguel</h1>
     </div>
 
 <!--Formulário com tudo que deverá ser preenchido.--> 
-    <form class="formulario" method="POST" action="?">
+    <form class="formulario" method="POST" action="?codigo=<?php echo $resultadoAlu['alu_codigo']; ?>">
      <br>
 
     <center>
@@ -167,25 +171,25 @@
         <h2 style="font-size:100%;font-weight:bold;">Cliente:</h2>
         <select name="cliente">
 		<?php while($resultadoCli = $consultaClientes->fetch_assoc()){ ?>
-			<option value="<?php echo $resultadoCli['cli_codigo']?>"><?php echo $resultadoCli['cli_nome']?></option>
+			<option value="<?php echo $resultadoCli['cli_codigo']?>"<?php if($resultadoAlu['alu_cli_codigo'] == $resultadoCli['cli_codigo']) { echo " selected";}?>><?php echo $resultadoCli['cli_nome']?></option>
 		<?php } ?>
-        
+
 		</select><br>
         <h2 style="font-size:100%;font-weight:bold;">Tema:</h2>
         <select name="tema">
 		<?php while($resultadoTem = $consultaTemas->fetch_assoc()){ ?>
-			<option value="<?php echo $resultadoTem['tem_codigo']?>"><?php echo $resultadoTem['tem_temas']?></option>
+			<option value="<?php echo $resultadoTem['tem_codigo']?>"<?php if($resultadoAlu['alu_tem_codigo'] == $resultadoTem['tem_codigo']) { echo " selected";}?>><?php echo $resultadoTem['tem_temas']?></option>
 		<?php } ?>
 		</select><br>
 
     <!-- Formularios normais -->
-    <h2 style="font-size: 100%; font-weight: bold;">Data de festa</h2><input required class ="form" type="date" name="data_f"> <br>
-    <h2 style="font-size: 100%; font-weight: bold;">Data de entrega</h2><input required class ="form" type="date" name="data_e"> <br>
-    <h2 style="font-size: 100%; font-weight: bold;">Data de recebimento</h2><input required class ="form" type="date" name="data_r"> <br>
-    <input required class ="form" type="text" name="nome_ani" placeholder="Nome do aniversariante:"> <br>
-    <input required class ="form" type="Number" name="idade" placeholder="Idade do aniversariante:"> <br>
-    <input required class ="form" type="Number" name="valor" placeholder="Valor do kit:"> <br>
-    <input required class ="form" size="45" type="text" name="acessorios" placeholder="Acessórios:"> <br>
+    <h2 style="font-size: 100%; font-weight: bold;">Data de festa</h2><input required class ="form" type="date" name="data_f" value="<?php echo $resultadoAlu['alu_data_festa']; ?>"> <br>
+    <h2 style="font-size: 100%; font-weight: bold;">Data de entrega</h2><input required class ="form" type="date" name="data_e" value="<?php echo $resultadoAlu['alu_entrega']; ?>"> <br>
+    <h2 style="font-size: 100%; font-weight: bold;">Data de recebimento</h2><input required class ="form" type="date" name="data_r" value="<?php echo $resultadoAlu['alu_recebimento']; ?>"> <br>
+    <input required class ="form" type="text" name="nome_ani" placeholder="Nome do aniversariante:" value="<?php echo $resultadoAlu['alu_aniversariante']; ?>"> <br>
+    <input required class ="form" type="Number" name="idade" placeholder="Idade do aniversariante:" value="<?php echo $resultadoAlu['alu_idade']; ?>"> <br>
+    <input required class ="form" type="Number" name="valor" placeholder="Valor do kit:" value="<?php echo $resultadoAlu['alu_valor']; ?>"> <br>
+    <input required class ="form" size="45" type="text" name="acessorios" placeholder="Acessórios:"value="<?php echo $resultadoAlu['alu_acessorios']; ?>"> <br>
     <ul>
     <!--Trecho abaixo é a lista da direita com os itens que serão selecionados para o aluguel, eles irão para a tabela de itens dos alugueis-->
     <li><a href="#"> Mesas </a>
@@ -270,7 +274,7 @@
     </li>
 </ul>
 <!-- Por fim, o botão de enviar -->
-    <input id="enviar" type="submit" value="ENVIAR">
+    <input id="enviar" type="submit" value="ALTERAR">
 
     </center>
 
