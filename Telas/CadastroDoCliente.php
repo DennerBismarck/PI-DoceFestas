@@ -77,11 +77,20 @@ if(isset($_POST['Nome'])){
     values ('$Nome', $Bairro, '$Logradouro', $Numero);"))
         {
             header("Location: TabelaDosClientes.php");
-        } else {
+            } else {
             echo "REGISTRATION ERROR";
-        }
+            }
 
 }
+            if(isset($_POST['Nome'])){
+            extract($_POST);
+            if($consulta = $conexao->query("insert into tb_teldoscli 
+            (tel_telefone)
+            values ($Telefone);")){
+            } else {
+            echo "REGISTRATION ERROR";
+            }
+        }
 ?>
 
 <body>
@@ -98,15 +107,24 @@ if(isset($_POST['Nome'])){
 
     <center>
     <input required class ="form" size="45" type="text" name="Nome" placeholder="Nome completo:"> <br>
-    
-    <input required class ="form" type="number" name="Bairro" placeholder="Bairro:"> <br>
+    <select required class ="form" size="1" name="Bairro">
+    <option value="1" selected> Centro </option>
+    <option value="2"> Imboca </option>
+    <option value="3"> São José </option>
+    <option value="4"> Santa Cecília </option>
+    <option value="5"> Santo Amaro </option>
+    <option value="6"> Sede </option>
+    <option value="7"> Vila do Rio </option>
+    <option value="8"> Zona rural </option>
+    </select>
     <input required class ="form" type="text" name="Logradouro" placeholder="Logradouro:"> <br>
     <input required class ="form" type="number" name="Numero" placeholder="Numero:"> <br>
+    <input required class ="form" type="number" name="Telefone" placeholder="Telefone:"> <br>
     <br>
     <input id="enviar" type="submit" value="ENVIAR">
    
     </center>
- 
+
 </form>
 
 

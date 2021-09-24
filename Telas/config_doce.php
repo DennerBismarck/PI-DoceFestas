@@ -8,7 +8,7 @@ $endereco = "localhost";
 $usuario = "root";
 $senha = "usbw";
 $banco = "db_festa";
-$porta = 3307;
+$porta = 3306;
 $conexao = new mysqli($endereco, $usuario, $senha, $banco, $porta);
 if(mysqli_connect_errno()) {
     die(mysqli_connect_error());

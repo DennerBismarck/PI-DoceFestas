@@ -1,6 +1,6 @@
-drop database if exists db_festas;
-create database db_festas;
-use db_festas;
+drop database if exists db_festa;
+create database db_festa;
+use db_festa;
 
 create table tb_bairros (
 bai_codigo int not null auto_increment,
@@ -26,7 +26,7 @@ foreign key (cli_bai_codigo) references tb_bairros(bai_codigo)
 
 create table tb_teldoscli (
 tel_telefone varchar(15) not null,
-tel_cli_codigo int not null,
+tel_cli_codigo int not null auto_increment,
 primary key(tel_telefone),
 foreign key(tel_cli_codigo) references tb_clientes(cli_codigo)
 )engine=InnoDB;
@@ -102,12 +102,15 @@ insert into tb_itens (ite_item) values
 ('Tecido Vual'),
 ('Tapete Felpudo'),
 ('Tapete Simples');
-
-insert into tb_bairros (bai_bairro) values
-('Centro');
-
 insert into tb_temas (tem_temas) values
 ('Guizado de pica-pau'),
 ('Miranha');
-select*from tb_alugueis;
-select*from tb_itensdosalugueis;
+insert into tb_bairros (bai_bairro) values
+('Centro'),
+('Imboca '),
+('São José'),
+('Santa Cecília'),
+('Santo Amaro'),
+('Sede'),
+('Vila do Rio'),
+('Zona rural');
