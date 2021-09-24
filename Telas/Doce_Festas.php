@@ -4,7 +4,10 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 	<title>Doce Festas</title>
-
+	<?php 
+		include("config_doce.php");
+		include("verificar.php");
+	?>
 	<style type="text/css">
 		
 		*{

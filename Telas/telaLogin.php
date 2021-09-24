@@ -2,6 +2,21 @@
     <head>
         <meta charset="utf-8">
         <title>Doce Festas - Login!</title>
+        <?php 
+            include("config_doce.php");
+            include("verificar.php");
+            if(isset($_POST['login'])){
+                extract($_POST);
+                $consulta = $conexao->query("select * from tb_vendedores where ven_login = '$login' and ven_senha = '$senha';");
+                if($resultado = $consulta->fetch_assoc()){
+                    $_SESSION['codigo'] = $resultado['ven_codigo'];
+                    header("Location: Doce_Festas.php");
+                }
+                else {
+                    echo "Usuário ou senha inválidos!";
+                }   
+            }    
+        ?>
         <style>
             *{
                 padding: 0;
@@ -72,7 +87,7 @@
         <div class="divLogin">
                 <form action="?" method="POST" class="formulario">
                     <p class="tituloFormulario">Usuário</p><br>
-                    <input type="text" name="usuario" required class ="form"> <br>
+                    <input type="text" name="login" required class ="form"> <br>
                     <br>
                     <p class="tituloFormulario" id="titulo2">Senha</p><br>
                     <input type="password" name="senha" required class = "form"> <br>

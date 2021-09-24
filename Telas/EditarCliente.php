@@ -1,9 +1,26 @@
 <html>
 <meta charset="utf-8">
 <title>Doce Festas - Cadastro</title>
-
 <head>
+<?php 
+    $codigo = $_GET['codigo'];
+    include("config_doce.php");
+    include("verificar.php");
+    // consulta para pegar os dados do cliente atual
+    $consultaCli = $conexao->query("select * from tb_clientes join tb_bairros on bai_codigo = cli_bai_codigo join tb_teldoscli on tel_cli_codigo = cli_codigo where cli_codigo = $codigo");
+    $resultadoCli = $consultaCli->fetch_assoc();
 
+    //inserindo as coisas nas tabelas
+    if(isset($_POST['Nome'])){
+       extract($_POST);
+        if($consulta = $conexao->query("update tb_clientes set cli_nome='$Nome',cli_numero = '$Numero', cli_bai_codigo = '$Bairro', cli_logradouro = '$Logradouro' where cli_codigo = $codigo")) {
+            header("Location: TabelaDosClientes.php");
+        } else {
+           echo"REGISTRATION ERROR!";
+            }
+        }
+
+?>
 <style type="text/css">
     *{
                 margin:0;
@@ -66,50 +83,25 @@
             }
 
 </style>
-	
+    
 </head>
-<?php
-include("config_doce.php");
-include("verificar.php");
-if(isset($_POST['Nome'])){
-    extract($_POST);
-    if($consulta = $conexao->query("insert into tb_clientes 
-    (cli_nome, cli_bai_codigo, cli_logradouro, cli_numero)
-    values ('$Nome', $Bairro, '$Logradouro', $Numero);"))
-        {
-            header("Location: TabelaDosClientes.php");
-            } else {
-            echo "REGISTRATION ERROR";
-            }
-
-}
-            if(isset($_POST['Nome'])){
-            extract($_POST);
-            if($consulta = $conexao->query("insert into tb_teldoscli 
-            (tel_telefone)
-            values ($Telefone);")){
-            } else {
-            echo "REGISTRATION ERROR";
-            }
-        }
-?>
 
 <body>
     
     <div id = header>
-            <h1 style= "text-align: center">Cadastro dos clientes</h1>
+            <h1 style= "text-align: center">Editar Cliente</h1>
     </div>
 
-    <a href="Doce_Festas.php" id = "enviar">Voltar</a>
+    <a href="TabelaDosClientes.php" id = "enviar">Voltar</a>
 
 
-<form class="formulario" method="POST" action="?">
+<form class="formulario" method="POST" action="?codigo=<?php echo $resultadoCli['cli_codigo'];?>">
      <br>
 
     <center>
-    <input required class ="form" size="45" type="text" name="Nome" placeholder="Nome completo:"> <br>
-    <select required class ="form" size="1" name="Bairro">
-    <option value="1" selected> Centro </option>
+    <input required class ="form" size="45" type="text" name="Nome" placeholder="Nome completo:"value="<?php echo $resultadoCli['cli_nome']; ?>"> <br>
+    <select required class ="form" size="1" name="Bairro"value=<?php echo $resultadoCli['cli_bai_codigo']; ?>>
+    <option value="1"> Centro </option>
     <option value="2"> Imboca </option>
     <option value="3"> São José </option>
     <option value="4"> Santa Cecília </option>
@@ -118,9 +110,9 @@ if(isset($_POST['Nome'])){
     <option value="7"> Vila do Rio </option>
     <option value="8"> Zona rural </option>
     </select>
-    <input required class ="form" type="text" name="Logradouro" placeholder="Logradouro:"> <br>
-    <input required class ="form" type="number" name="Numero" placeholder="Numero:"> <br>
-    <input required class ="form" type="number" name="Telefone" placeholder="Telefone:"> <br>
+    <input required class ="form" type="text" name="Logradouro" placeholder="Logradouro:"value="<?php echo $resultadoCli['cli_logradouro'];?>"> <br>
+    <input required class ="form" type="number" name="Numero" placeholder="Numero:"value=<?php echo $resultadoCli['cli_numero']; ?>> <br>
+    <input required class ="form" type="number" name="Telefone" placeholder="Telefone:"value=<?php echo $resultadoCli['tel_telefone']; ?>> <br>
     <br>
     <input id="enviar" type="submit" value="ENVIAR">
    

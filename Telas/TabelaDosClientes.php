@@ -2,7 +2,23 @@
     <head>
         <meta charset="utf-8">
         <title>Doce festas - Clientes</title>
-        <?php include("config_doce.php"); 
+        <?php include("config_doce.php");
+        include("verificar.php"); 
+        
+        //Delete
+        if(isset($_GET['excluir'])){
+            $codigo = $_GET['excluir'];
+            if($consulta = $conexao->query("delete from tb_teldoscli where tel_cli_codigo = $codigo")) {
+                if($consulta = $conexao->query("delete from tb_clientes where cli_codigo = $codigo")) {
+                        header("Location: TabelaDosClientes.php");
+                        } else {
+                            echo "Erro na exclusão!";
+                        }
+                } else {
+                    echo "Erro na exclusão!";
+                }
+            }
+        
         $consulta = $conexao->query("select * from tb_clientes 
         join tb_bairros on cli_bai_codigo = bai_codigo
         join tb_teldoscli on cli_codigo = tel_cli_codigo;");
@@ -61,12 +77,25 @@
             i{
                 color:#000000;
             }
+            #enviar{
+                font-size: 120%;
+                background-color: #d8b800;
+                border-radius: 5px;
+                font-size: 100%;
+                height: 40px;
+                max-width: 200%;
+                padding: 0 5px;
+                width: 30%;
+                color: #fff;
+                cursor:pointer;
+            }
         </style>
     </head>
     <body>
         <div id = header>
             <h1 style= "text-align: center">Tabela dos clientes</h1>
         </div>
+        <a href="Doce_Festas.php" id = "enviar">Voltar ao menu</a>
         <br>
         <div id="quadrotabela">
             <table>
@@ -80,7 +109,7 @@
                     <th>Ações</th>
                                       
                 </tr>
-                <?php while ($resultado = $consulta->fetch_assoc()){ ?>
+                <?php while ($resultado = $consulta->fetch_assoc()){?>
                 <tr>
                     <td><?php echo $resultado["cli_codigo"]?></td> 
                     <td><?php echo $resultado["cli_nome"]?></td>
@@ -89,8 +118,11 @@
                     <td><?php echo $resultado["cli_numero"]?></td> 
                     <td><?php echo $resultado["tel_telefone"]?></td> 
                     
-                    <td><a href="https://cdn.discordapp.com/attachments/715244206154580016/882320071739994162/1630431891912.jpg"><i class="fas fa-edit" aria-hidden = "true"></i></a>
-                    || <a href="https://cdn.discordapp.com/attachments/715244206154580016/817353242442858557/1ff408ad-4df9-4183-a311-ac043b35d6dc.png" onclick="return confirm('Deseja apagar?')"><i class="fas fa-trash"></i></a></td>
+                    <td><a href="EditarCliente.php?codigo=<?php echo $resultado ['cli_codigo']; ?> ">
+
+                        <i class="fas fa-edit" aria-hidden = "true"></i></a>
+                    || <a href="?excluir=<?php echo $resultado['cli_codigo'];?>" onclick="return confirm('Deseja apagar?');"><i class="fas fa-trash"></i></a>
+                </td>
                     
                 </tr>
                 <?php } ?>
