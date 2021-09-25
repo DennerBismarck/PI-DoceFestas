@@ -16,6 +16,8 @@ if(mysqli_connect_errno()) {
 }
 date_default_timezone_set('America/Fortaleza');
 mysqli_set_charset($conexao, "utf8");
+
+@session_start;
 ?>
 </body>
 </html>

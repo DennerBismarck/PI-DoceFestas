@@ -5,14 +5,22 @@
          <script src="https://kit.fontawesome.com/a4a3c0465f.js" crossorigin="anonymous"></script>
          <?php 
             include("config_doce.php");
+            include("verificar.php");
+
+            //Delete
+            if(isset($_GET['excluir'])){
+                $codigo = $_GET['excluir'];
+                if($consulta = $conexao->query("delete from tb_alugueis where alu_codigo = $codigo")) {
+                    header("Location: TabelaDosAlugueis.php");
+                } else {
+                    echo "Erro na exclusão!";
+                }
+            }
+            
             $consulta = $conexao->query("select * from tb_alugueis 
             join tb_clientes on alu_cli_codigo = cli_codigo
             join tb_temas on alu_tem_codigo = tem_codigo
             group by alu_codigo;");
-            $consulta2 = $conexao->query("select * from tb_itensdosalugueis
-            join tb_alugueis on ilu_alu_codigo = alu_codigo
-            join tb_itens on ilu_ite_codigo = ite_codigo
-            group by ilu_alu_codigo;")
          ?>
         <style>
              *{
@@ -67,12 +75,25 @@
             i{
                 color:#000000;
             }
+            #enviar{
+                font-size: 120%;
+                background-color: #d8b800;
+                border-radius: 5px;
+                font-size: 100%;
+                height: 40px;
+                max-width: 200%;
+                padding: 0 5px;
+                width: 40%;
+                color: #fff;
+                cursor:pointer;
+            }
         </style>
     </head>
     <body>
         <div id = header>
             <h1 style= "text-align: center">Tabela dos alugueis</h1>
         </div>
+        <a href="Doce_Festas.php" id = "enviar">Voltar ao menu</a>
         <br>
         <div id="quadrotabela">
             <table>
@@ -81,11 +102,10 @@
                     <th>Cliente</th>
                     <th>Tema</th>
                     <th>Aniversariante</th>
-                    <th>Acessórios</th>
+                    <th>Especificação</th>
                     <th>Data da festa</th>
                     <th>Data da entrega</th>
                     <th>Data do recebimento</th>
-                   <!-- <th>Itens</th>-->
                     <th>Valor do kit</th>
                     <th>Ações</th>
                 </tr>
@@ -95,16 +115,13 @@
                     <td><?php echo $resultado["cli_nome"]?></td>
                     <td><?php echo $resultado["tem_temas"]?></td>
                     <td><?php echo $resultado["alu_aniversariante"]?></td> 
-                    <td><?php echo $resultado["alu_acessorios"]?></td>
+                    <td><?php echo $resultado["alu_especificacao"]?></td>
                     <td><?php echo $resultado["alu_data_festa"]?></td> 
                     <td><?php echo $resultado["alu_entrega"]?></td> 
                     <td><?php echo $resultado["alu_recebimento"]?></td> 
-                    <!--<td><//?php while ($resultado2 = $consulta2->fetch_assoc()){?>  
-                        <//?php echo $resultado2['ite_item']?>
-                    <//?php } ?></td> -->   
                     <td >R$ <?php echo number_format($resultado['alu_valor'],2,",",".");?>
                     <td><a href="aluguelEditar.php?codigo=<?php echo $resultado['alu_codigo']; ?>"><i class="fas fa-edit" aria-hidden = "true"></i></a>
-                    || <a href="https://cdn.discordapp.com/attachments/715244206154580016/817353242442858557/1ff408ad-4df9-4183-a311-ac043b35d6dc.png" onclick="return confirm('Deseja apagar?')"><i class="fas fa-trash"></i></a></td>    
+                    |<a href="?excluir=<?php echo $resultado['alu_codigo']; ?>" onclick="return confirm('Deseja apagar?');"><i class="fas fa-trash"></i></a></td>    
                 </tr>
                 <?php } ?>
             </table>

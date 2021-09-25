@@ -6,6 +6,7 @@
     
     $codigo = $_GET['codigo'];
     include("config_doce.php");
+    include("verificar.php");
     //Milhões de consultas pra esse ninho de rato rodar
     $consultaMesas = $conexao->query("select * from tb_itens where ite_item like '%Mesa%';");
     $consultaJarros = $conexao->query("select * from tb_itens where ite_item like '%Jarro%';");
@@ -23,30 +24,19 @@
     $vendedor = '1';
 
     // consulta para pegar os dados do aluguel atual
-    $consultaAlu = $conexao->query("select * from tb_alugueis join tb_temas where alu_codigo = $codigo");
+    $consultaAlu = $conexao->query("select * from tb_alugueis join tb_temas on tem_codigo = alu_tem_codigo where alu_codigo = $codigo");
     $resultadoAlu = $consultaAlu->fetch_assoc();
 
     //inserindo as coisas nas tabelas
-    if(isset($_POST['acessorios'])){
+    if(isset($_POST['especificacao'])){
         extract($_POST);
         if($consulta = $conexao->query("update tb_alugueis set alu_cli_codigo='$cliente',alu_tem_codigo='$tema',alu_valor='$valor', alu_idade='$idade', alu_entrega='$data_e',
-        alu_recebimento='$data_r', alu_data_festa='$data_f', alu_acessorios='$acessorios', alu_aniversariante='$nome_ani' where alu_codigo=$codigo")) {
+        alu_recebimento='$data_r', alu_data_festa='$data_f', alu_especificacao='$especificacao', alu_aniversariante='$nome_ani' where alu_codigo=$codigo")) {
             header("Location: TabelaDosAlugueis.php");
         } else {
             echo"REGISTRATION ERROR1";
         }
     }
-    
-   // if(isset($_POST['acessorios'])){
-    //    extract($_POST);
-    //    if($consulta = $conexao->query("insert into tb_itensdosalugueis 
-    //    (ilu_ite_codigo) values ($item);")){
-    //        header("Location: TabelaDosAlugueis.php");
-    //        echo"Sucesso2!";
-    //        } else {
-    //           echo "REGISTRATION ERROR2";
-    //       }
-    //    }
 ?>
 <style type="text/css">
     /* CSS da página*/
@@ -95,7 +85,7 @@
                 height: 40px;
                 max-width: 200%;
                 padding: 0 5px;
-                width: 30%;
+                width: 40%;
                 color: #fff;
                 cursor:pointer;
             }
@@ -161,8 +151,11 @@
     <div id = header>
             <h1 style= "text-align: center">Edição de aluguel</h1>
     </div>
+    
+    <a href="TabelaDosAlugueis.php" id = "enviar">Voltar</a>
 
 <!--Formulário com tudo que deverá ser preenchido.--> 
+    
     <form class="formulario" method="POST" action="?codigo=<?php echo $resultadoAlu['alu_codigo']; ?>">
      <br>
 
@@ -189,90 +182,7 @@
     <input required class ="form" type="text" name="nome_ani" placeholder="Nome do aniversariante:" value="<?php echo $resultadoAlu['alu_aniversariante']; ?>"> <br>
     <input required class ="form" type="Number" name="idade" placeholder="Idade do aniversariante:" value="<?php echo $resultadoAlu['alu_idade']; ?>"> <br>
     <input required class ="form" type="Number" name="valor" placeholder="Valor do kit:" value="<?php echo $resultadoAlu['alu_valor']; ?>"> <br>
-    <input required class ="form" size="45" type="text" name="acessorios" placeholder="Acessórios:"value="<?php echo $resultadoAlu['alu_acessorios']; ?>"> <br>
-    <ul>
-    <!--Trecho abaixo é a lista da direita com os itens que serão selecionados para o aluguel, eles irão para a tabela de itens dos alugueis-->
-    <li><a href="#"> Mesas </a>
-        <ul>
-           <?php while ($resultado = $consultaMesas->fetch_assoc()){?>
-                <li><input id="marcar" type="checkbox" name="item" value="ite_codigo"><?php echo $resultado["ite_item"];?> 
-            <br></li>
-            <?php }?>
-        </ul>
-    </li>
-
-     <li><a href="#"> Jarros </a>
-        <ul>
-           <?php while ($resultado = $consultaJarros->fetch_assoc()){?>
-                <li><input id="marcar" type="checkbox" name="item" value="ite_codigo"><?php echo $resultado["ite_item"];?> 
-            <br></li>
-            <?php }?>
-        </ul>
-    </li>
-
-     <li><a href="#"> Bandeja </a>
-        <ul>
-           <?php while ($resultado = $consultaBandeja->fetch_assoc()){?>
-                <li><input id="marcar" type="checkbox" name="item" value="ite_codigo"><?php echo $resultado["ite_item"];?> 
-            <br></li>
-            <?php }?>
-        </ul>
-    </li>
-
-    <li><a href="#"> Luminárias </a>
-        <ul>
-           <?php while ($resultado = $consultaLuminaria->fetch_assoc()){?>
-                <li><input id="marcar" type="checkbox" name="item" value="ite_codigo"><?php echo $resultado["ite_item"];?> 
-            <br></li>
-            <?php }?>
-        </ul>
-    </li>
-
-    <li><a href="#"> Painel </a>
-        <ul>
-           <?php while ($resultado = $consultaPainel->fetch_assoc()){?>
-                <li><input id="marcar" type="checkbox" name="item" value="ite_codigo"><?php echo $resultado["ite_item"];?> 
-            <br></li>
-            <?php }?>
-        </ul>
-    </li>
-
-    <li><a href="#"> Muro inglês </a>
-        <ul>
-           <?php while ($resultado = $consultaMuroingles->fetch_assoc()){?>
-                <li><input id="marcar" type="checkbox" name="item" value="ite_codigo"><?php echo $resultado["ite_item"];?> 
-            <br></li>
-            <?php }?>
-        </ul>
-    </li>
-
-    <li><a href="#"> Flores </a>
-        <ul>
-           <?php while ($resultado = $consultaFlores->fetch_assoc()){?>
-                <li><input id="marcar" type="checkbox" name="item" value="ite_codigo"><?php echo $resultado["ite_item"];?> 
-            <br></li>
-            <?php }?>
-        </ul>
-    </li>
-
-    <li><a href="#"> Tecidos </a>
-        <ul>
-           <?php while ($resultado = $consultaTecidos->fetch_assoc()){?>
-                <li><input id="marcar" type="checkbox" name="item" value="ite_codigo"><?php echo $resultado["ite_item"];?> 
-            <br></li>
-            <?php }?>
-        </ul>
-    </li>
-
-    <li><a href="#"> Tapetes </a>
-        <ul>
-           <?php while ($resultado = $consultaTapetes->fetch_assoc()){?>
-                <li><input id="marcar" type="checkbox" name="item" value="tapete"><?php echo $resultado["ite_item"];?> 
-            <br></li>
-            <?php }?>
-        </ul>
-    </li>
-</ul>
+    <textarea required class ="form" rows="4" cols="20" name="especificacao" placeholder="Especificação:"><?php echo $resultadoAlu['alu_especificacao']; ?></textarea><br>
 <!-- Por fim, o botão de enviar -->
     <input id="enviar" type="submit" value="ALTERAR">
 

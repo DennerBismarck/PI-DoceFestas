@@ -3,6 +3,7 @@
 <meta charset="utf-8">
 <title>Doce Festas - Cadastro</title>
 <?php
+    include("verificar.php");
     include("config_doce.php");
     //Milhões de consultas pra esse ninho de rato rodar
     $consultaMesas = $conexao->query("select * from tb_itens where ite_item like '%Mesa%';");
@@ -21,28 +22,18 @@
     $vendedor = '1';
 
     //inserindo as coisas nas tabelas
-    if(isset($_POST['acessorios'])){
+    if(isset($_POST['especificacao'])){
         extract($_POST);
         if($consulta = $conexao->query("insert into tb_alugueis (alu_valor, alu_idade, alu_entrega, alu_recebimento, alu_data_festa,
-        alu_acessorios, alu_aniversariante, alu_tem_codigo, alu_ven_codigo, alu_cli_codigo) 
+        alu_especificacao, alu_aniversariante, alu_tem_codigo, alu_ven_codigo, alu_cli_codigo) 
         values 
-        ('$valor','$idade','$data_e','$data_r','$data_f','$acessorios','$nome_ani','$tema','$vendedor', '$cliente');")) {
+        ('$valor','$idade','$data_e','$data_r','$data_f','$especificacao','$nome_ani','$tema','$vendedor', '$cliente');")) {
             header("Location: TabelaDosAlugueis.php");
         } else {
             echo"REGISTRATION ERROR1";
         }
     }
-    
-   // if(isset($_POST['acessorios'])){
-    //    extract($_POST);
-    //    if($consulta = $conexao->query("insert into tb_itensdosalugueis 
-    //    (ilu_ite_codigo) values ($item);")){
-    //        header("Location: TabelaDosAlugueis.php");
-    //        echo"Sucesso2!";
-    //        } else {
-    //           echo "REGISTRATION ERROR2";
-    //       }
-    //    }
+
 ?>
 <style type="text/css">
     /* CSS da página*/
@@ -91,7 +82,7 @@
                 height: 40px;
                 max-width: 200%;
                 padding: 0 5px;
-                width: 30%;
+                width: 40%;
                 color: #fff;
                 cursor:pointer;
             }
@@ -158,6 +149,8 @@
             <h1 style= "text-align: center">Cadastro dos aluguéis</h1>
     </div>
 
+    <a href="Doce_Festas.php" id = "enviar">Voltar</a>
+
 <!--Formulário com tudo que deverá ser preenchido.--> 
     <form class="formulario" method="POST" action="?">
      <br>
@@ -185,90 +178,7 @@
     <input required class ="form" type="text" name="nome_ani" placeholder="Nome do aniversariante:"> <br>
     <input required class ="form" type="Number" name="idade" placeholder="Idade do aniversariante:"> <br>
     <input required class ="form" type="Number" name="valor" placeholder="Valor do kit:"> <br>
-    <input required class ="form" size="45" type="text" name="acessorios" placeholder="Acessórios:"> <br>
-    <ul>
-    <!--Trecho abaixo é a lista da direita com os itens que serão selecionados para o aluguel, eles irão para a tabela de itens dos alugueis-->
-    <li><a href="#"> Mesas </a>
-        <ul>
-           <?php while ($resultado = $consultaMesas->fetch_assoc()){?>
-                <li><input id="marcar" type="checkbox" name="item" value="ite_codigo"><?php echo $resultado["ite_item"];?> 
-            <br></li>
-            <?php }?>
-        </ul>
-    </li>
-
-     <li><a href="#"> Jarros </a>
-        <ul>
-           <?php while ($resultado = $consultaJarros->fetch_assoc()){?>
-                <li><input id="marcar" type="checkbox" name="item" value="ite_codigo"><?php echo $resultado["ite_item"];?> 
-            <br></li>
-            <?php }?>
-        </ul>
-    </li>
-
-     <li><a href="#"> Bandeja </a>
-        <ul>
-           <?php while ($resultado = $consultaBandeja->fetch_assoc()){?>
-                <li><input id="marcar" type="checkbox" name="item" value="ite_codigo"><?php echo $resultado["ite_item"];?> 
-            <br></li>
-            <?php }?>
-        </ul>
-    </li>
-
-    <li><a href="#"> Luminárias </a>
-        <ul>
-           <?php while ($resultado = $consultaLuminaria->fetch_assoc()){?>
-                <li><input id="marcar" type="checkbox" name="item" value="ite_codigo"><?php echo $resultado["ite_item"];?> 
-            <br></li>
-            <?php }?>
-        </ul>
-    </li>
-
-    <li><a href="#"> Painel </a>
-        <ul>
-           <?php while ($resultado = $consultaPainel->fetch_assoc()){?>
-                <li><input id="marcar" type="checkbox" name="item" value="ite_codigo"><?php echo $resultado["ite_item"];?> 
-            <br></li>
-            <?php }?>
-        </ul>
-    </li>
-
-    <li><a href="#"> Muro inglês </a>
-        <ul>
-           <?php while ($resultado = $consultaMuroingles->fetch_assoc()){?>
-                <li><input id="marcar" type="checkbox" name="item" value="ite_codigo"><?php echo $resultado["ite_item"];?> 
-            <br></li>
-            <?php }?>
-        </ul>
-    </li>
-
-    <li><a href="#"> Flores </a>
-        <ul>
-           <?php while ($resultado = $consultaFlores->fetch_assoc()){?>
-                <li><input id="marcar" type="checkbox" name="item" value="ite_codigo"><?php echo $resultado["ite_item"];?> 
-            <br></li>
-            <?php }?>
-        </ul>
-    </li>
-
-    <li><a href="#"> Tecidos </a>
-        <ul>
-           <?php while ($resultado = $consultaTecidos->fetch_assoc()){?>
-                <li><input id="marcar" type="checkbox" name="item" value="ite_codigo"><?php echo $resultado["ite_item"];?> 
-            <br></li>
-            <?php }?>
-        </ul>
-    </li>
-
-    <li><a href="#"> Tapetes </a>
-        <ul>
-           <?php while ($resultado = $consultaTapetes->fetch_assoc()){?>
-                <li><input id="marcar" type="checkbox" name="item" value="tapete"><?php echo $resultado["ite_item"];?> 
-            <br></li>
-            <?php }?>
-        </ul>
-    </li>
-</ul>
+    <textarea required class ="form" rolls="4" cols="20" name="especificacao" placeholder="Especificação:"></textarea> <br>
 <!-- Por fim, o botão de enviar -->
     <input id="enviar" type="submit" value="ENVIAR">
 
