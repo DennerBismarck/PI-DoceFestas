@@ -74,24 +74,16 @@ include("verificar.php");
 if(isset($_POST['Nome'])){
     extract($_POST);
     if($consulta = $conexao->query("insert into tb_clientes 
-    (cli_nome, cli_bai_codigo, cli_logradouro, cli_numero)
-    values ('$Nome', $Bairro, '$Logradouro', $Numero);"))
+    (cli_nome, cli_bai_codigo, cli_logradouro, cli_numero, cli_telefone)
+    values ('$Nome', $Bairro, '$Logradouro', $Numero, $Telefone);"))
         {
             header("Location: TabelaDosClientes.php");
             } else {
             echo "REGISTRATION ERROR";
-            }
+        }
 
 }
-            if(isset($_POST['Nome'])){
-            extract($_POST);
-            if($consulta = $conexao->query("insert into tb_teldoscli 
-            (tel_telefone)
-            values ($Telefone);")){
-            } else {
-            echo "REGISTRATION ERROR";
-            }
-        }
+
 ?>
 
 <body>

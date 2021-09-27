@@ -20,16 +20,11 @@ cli_nome varchar(70) not null,
 cli_numero int not null,
 cli_bai_codigo int not null,
 cli_logradouro varchar(150),
+cli_telefone varchar(15),
 primary key(cli_codigo),
 foreign key (cli_bai_codigo) references tb_bairros(bai_codigo)
 )engine=InnoDB;
 
-create table tb_teldoscli (
-tel_telefone varchar(15) not null,
-tel_cli_codigo int not null auto_increment,
-primary key(tel_telefone),
-foreign key(tel_cli_codigo) references tb_clientes(cli_codigo)
-)engine=InnoDB;
 
 create table tb_vendedores (
   ven_codigo int not null primary key,

@@ -7,13 +7,13 @@
     include("config_doce.php");
     include("verificar.php");
     // consulta para pegar os dados do cliente atual
-    $consultaCli = $conexao->query("select * from tb_clientes join tb_bairros on bai_codigo = cli_bai_codigo join tb_teldoscli on tel_cli_codigo = cli_codigo where cli_codigo = $codigo");
+    $consultaCli = $conexao->query("select * from tb_clientes join tb_bairros on bai_codigo = cli_bai_codigo where cli_codigo = $codigo");
     $resultadoCli = $consultaCli->fetch_assoc();
 
     //inserindo as coisas nas tabelas
     if(isset($_POST['Nome'])){
        extract($_POST);
-        if($consulta = $conexao->query("update tb_clientes set cli_nome='$Nome',cli_numero = '$Numero', cli_bai_codigo = '$Bairro', cli_logradouro = '$Logradouro' where cli_codigo = $codigo")) {
+        if($consulta = $conexao->query("update tb_clientes set cli_nome='$Nome',cli_numero = '$Numero', cli_bai_codigo = '$Bairro', cli_logradouro = '$Logradouro', cli_telefone = '$Telefone' where cli_codigo = $codigo")) {
             header("Location: TabelaDosClientes.php");
         } else {
            echo"REGISTRATION ERROR!";
@@ -112,7 +112,7 @@
     </select>
     <input required class ="form" type="text" name="Logradouro" placeholder="Logradouro:"value="<?php echo $resultadoCli['cli_logradouro'];?>"> <br>
     <input required class ="form" type="number" name="Numero" placeholder="Numero:"value=<?php echo $resultadoCli['cli_numero']; ?>> <br>
-    <input required class ="form" type="number" name="Telefone" placeholder="Telefone:"value=<?php echo $resultadoCli['tel_telefone']; ?>> <br>
+    <input required class ="form" type="number" name="Telefone" placeholder="Telefone:"value=<?php echo $resultadoCli['cli_telefone']; ?>> <br>
     <br>
     <input id="enviar" type="submit" value="ENVIAR">
    
