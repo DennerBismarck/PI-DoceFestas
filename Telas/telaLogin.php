@@ -4,7 +4,6 @@
         <title>Doce Festas - Login!</title>
         <?php 
             include("config_doce.php");
-            include("verificar.php");
             if(isset($_POST['login'])){
                 extract($_POST);
                 $consulta = $conexao->query("select * from tb_vendedores where ven_login = '$login' and ven_senha = '$senha';");
