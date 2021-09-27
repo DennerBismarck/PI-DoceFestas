@@ -8,20 +8,15 @@
         //Delete
         if(isset($_GET['excluir'])){
             $codigo = $_GET['excluir'];
-            if($consulta = $conexao->query("delete from tb_teldoscli where tel_cli_codigo = $codigo")) {
-                if($consulta = $conexao->query("delete from tb_clientes where cli_codigo = $codigo")) {
-                        header("Location: TabelaDosClientes.php");
-                        } else {
-                            echo "Erro na exclusão!";
-                        }
+            if($consulta = $conexao->query("delete from tb_clientes where cli_codigo = $codigo")) {
+                header("Location: TabelaDosClientes.php");
                 } else {
                     echo "Erro na exclusão!";
                 }
             }
         
         $consulta = $conexao->query("select * from tb_clientes 
-        join tb_bairros on cli_bai_codigo = bai_codigo
-        join tb_teldoscli on cli_codigo = tel_cli_codigo;");
+        join tb_bairros on cli_bai_codigo = bai_codigo;");
         ?>
          <script src="https://kit.fontawesome.com/a4a3c0465f.js" crossorigin="anonymous"></script>
         <style>
@@ -105,7 +100,7 @@
                     <th>Bairro</th>
                     <th>Logradouro</th>
                     <th>Número</th>
-                    <th>Telefones</th>
+                    <th>Telefone</th>
                     <th>Ações</th>
                                       
                 </tr>
@@ -116,7 +111,7 @@
                     <td><?php echo $resultado["bai_bairro"]?></td> 
                     <td><?php echo $resultado["cli_logradouro"]?></td> 
                     <td><?php echo $resultado["cli_numero"]?></td> 
-                    <td><?php echo $resultado["tel_telefone"]?></td> 
+                    <td><?php echo $resultado["cli_telefone"]?></td> 
                     
                     <td><a href="EditarCliente.php?codigo=<?php echo $resultado ['cli_codigo']; ?> ">
 

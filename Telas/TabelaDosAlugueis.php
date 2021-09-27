@@ -17,7 +17,8 @@
                 }
             }
             
-            $consulta = $conexao->query("select * from tb_alugueis 
+            $consulta = $conexao->query("select *, date_format(alu_entrega,'%d/%m/%Y') as dataE, date_format(alu_recebimento,'%d/%m/%Y') as dataR, date_format(alu_data_festa,'%d/%m/%Y') as dataF
+            from tb_alugueis 
             join tb_clientes on alu_cli_codigo = cli_codigo
             join tb_temas on alu_tem_codigo = tem_codigo
             group by alu_codigo;");
@@ -116,9 +117,9 @@
                     <td><?php echo $resultado["tem_temas"]?></td>
                     <td><?php echo $resultado["alu_aniversariante"]?></td> 
                     <td><?php echo $resultado["alu_especificacao"]?></td>
-                    <td><?php echo $resultado["alu_data_festa"]?></td> 
-                    <td><?php echo $resultado["alu_entrega"]?></td> 
-                    <td><?php echo $resultado["alu_recebimento"]?></td> 
+                    <td><?php echo $resultado['dataF']?></td> 
+                    <td><?php echo $resultado['dataE']?></td> 
+                    <td><?php echo $resultado['dataR']?></td> 
                     <td >R$ <?php echo number_format($resultado['alu_valor'],2,",",".");?>
                     <td><a href="aluguelEditar.php?codigo=<?php echo $resultado['alu_codigo']; ?>"><i class="fas fa-edit" aria-hidden = "true"></i></a>
                     |<a href="?excluir=<?php echo $resultado['alu_codigo']; ?>" onclick="return confirm('Deseja apagar?');"><i class="fas fa-trash"></i></a></td>    
