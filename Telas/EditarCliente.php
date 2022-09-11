@@ -101,7 +101,7 @@
     <center>
     <input required class ="form" size="45" type="text" name="Nome" placeholder="Nome completo:"value="<?php echo $resultadoCli['cli_nome']; ?>"> <br>
     <select required class ="form" size="1" name="Bairro"value=<?php echo $resultadoCli['cli_bai_codigo']; ?>>
-    <option value="1"> Centro Tamo Junto</option>
+    <option value="1"> Centro</option>
     <option value="2"> Imboca </option>
     <option value="3"> São José </option>
     <option value="4"> Santa Cecília </option>
