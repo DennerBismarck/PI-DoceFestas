@@ -106,7 +106,7 @@
     <option value="3"> São José </option>
     <option value="4"> Santa Cecília </option>
     <option value="5"> Santo Amaro </option>
-    <option value="6"> Sede </option>
+    <option value="6"> abc </option>
     <option value="7"> Vila do Rio </option>
     <option value="8"> Zona rural </option>
     </select>
